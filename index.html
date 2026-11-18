@@ -1,0 +1,1682 @@
+<!DOCTYPE html>
+<html lang="uz" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Apple — Rasmiy uslubdagi interaktiv vitrina</title>
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Inter & SF Pro uslubidagi shriftlar -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['-apple-system', 'BlinkMacSystemFont', '"SF Pro Display"', '"SF Pro Text"', 'Inter', 'sans-serif'],
+          },
+          colors: {
+            appleBlue: '#0071e3',
+            appleBlueHover: '#0077ed',
+            appleDark: '#000000',
+            appleGrayBg: '#f5f5f7',
+            appleTextDark: '#1d1d1f',
+            appleTextMuted: '#86868b',
+          },
+        },
+      },
+    };
+  </script>
+
+  <style>
+    /* Apple Core Typography & Smooth Rendering */
+    * {
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Inter", sans-serif;
+      background-color: #ffffff;
+      color: #1d1d1f;
+      overflow-x: hidden;
+    }
+
+    /* Apple Intelligence Gradient Text */
+    .ai-gradient-text {
+      background: linear-gradient(90deg, #007aff, #af52de, #ff2d55, #ff9500);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-size: 200% auto;
+      animation: aiShimmer 5s linear infinite;
+    }
+
+    @keyframes aiShimmer {
+      0% { background-position: 0% center; }
+      100% { background-position: 200% center; }
+    }
+
+    /* Glassmorphism Global Header */
+    .apple-nav {
+      background: rgba(251, 251, 253, 0.82);
+      backdrop-filter: saturate(180%) blur(20px);
+      -webkit-backdrop-filter: saturate(180%) blur(20px);
+      transition: background-color 0.35s cubic-bezier(0.28, 0.11, 0.32, 1);
+    }
+
+    .apple-nav.menu-open {
+      background: rgba(251, 251, 253, 0.98);
+    }
+
+    /* Mega Menu Flyout Animation */
+    .mega-menu-panel {
+      max-height: 0;
+      opacity: 0;
+      visibility: hidden;
+      overflow: hidden;
+      transition:
+        max-height 0.45s cubic-bezier(0.28, 0.11, 0.32, 1),
+        opacity 0.3s cubic-bezier(0.28, 0.11, 0.32, 1),
+        visibility 0.3s ease;
+    }
+
+    .mega-menu-panel.active {
+      max-height: 520px;
+      opacity: 1;
+      visibility: visible;
+    }
+
+    /* Staggered Mega Menu Item Animation */
+    .mega-item {
+      opacity: 0;
+      transform: translateY(-8px);
+      transition: opacity 0.35s ease, transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .mega-menu-panel.active .mega-item {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Page Blur Backdrop when Mega Menu is Open */
+    .page-curtain {
+      opacity: 0;
+      pointer-events: none;
+      backdrop-filter: blur(0px);
+      -webkit-backdrop-filter: blur(0px);
+      transition: opacity 0.35s ease, backdrop-filter 0.35s ease;
+    }
+
+    .page-curtain.active {
+      opacity: 1;
+      pointer-events: auto;
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+    }
+
+    /* Apple Pill Buttons */
+    .btn-apple-primary {
+      background-color: #0071e3;
+      color: #ffffff;
+      border-radius: 980px;
+      padding: 10px 22px;
+      font-size: 17px;
+      line-height: 1.17648;
+      font-weight: 400;
+      letter-spacing: -0.022em;
+      transition: all 0.25s cubic-bezier(0.25, 0.1, 0.25, 1);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+
+    .btn-apple-primary:hover {
+      background-color: #0077ed;
+      transform: scale(1.02);
+    }
+
+    .btn-apple-secondary {
+      background-color: transparent;
+      color: #0071e3;
+      border: 1px solid #0071e3;
+      border-radius: 980px;
+      padding: 9px 21px;
+      font-size: 17px;
+      line-height: 1.17648;
+      font-weight: 400;
+      letter-spacing: -0.022em;
+      transition: all 0.25s cubic-bezier(0.25, 0.1, 0.25, 1);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+
+    .btn-apple-secondary:hover {
+      background-color: #0071e3;
+      color: #ffffff;
+      transform: scale(1.02);
+    }
+
+    .btn-apple-dark-outline {
+      background-color: transparent;
+      color: #2997ff;
+      border: 1px solid #2997ff;
+      border-radius: 980px;
+      padding: 9px 21px;
+      font-size: 17px;
+      transition: all 0.25s ease;
+    }
+
+    .btn-apple-dark-outline:hover {
+      background-color: #2997ff;
+      color: #ffffff;
+    }
+
+    .btn-sm {
+      padding: 7px 16px;
+      font-size: 14px;
+    }
+
+    /* Scroll Reveal Animation */
+    .reveal-up {
+      opacity: 0;
+      transform: translateY(32px);
+      transition: opacity 0.85s cubic-bezier(0.16, 1, 0.3, 1), transform 0.85s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .reveal-up.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Bento Card Hover Zoom */
+    .bento-card {
+      overflow: hidden;
+      position: relative;
+      transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .bento-card .bento-visual {
+      transition: transform 0.75s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .bento-card:hover .bento-visual {
+      transform: scale(1.035);
+    }
+
+    /* Custom Titanium Glow on iPhone 16 Pro Hero */
+    .titanium-glow {
+      transition: box-shadow 0.7s ease, background 0.7s ease, border-color 0.7s ease;
+    }
+
+    /* Apple TV+ Carousel Transitions */
+    .tv-slide {
+      transition: transform 0.65s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.65s ease, filter 0.65s ease;
+    }
+
+    .tv-slide.inactive {
+      opacity: 0.42;
+      transform: scale(0.95);
+      filter: brightness(0.75);
+    }
+
+    .tv-slide.active {
+      opacity: 1;
+      transform: scale(1);
+      filter: brightness(1);
+    }
+
+    /* Hide scrollbars cleanly */
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+
+    /* Subtle floating motion for hardware mockups */
+    @keyframes floatSlow {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-8px); }
+    }
+    .animate-float {
+      animation: floatSlow 5.5s ease-in-out infinite;
+    }
+
+    /* Pulse ring for Watch & Video controls */
+    @keyframes pulseGlow {
+      0%, 100% { opacity: 0.55; transform: scale(1); }
+      50% { opacity: 0.9; transform: scale(1.04); }
+    }
+    .animate-pulse-glow {
+      animation: pulseGlow 4s ease-in-out infinite;
+    }
+  </style>
+</head>
+<body class="antialiased selection:bg-blue-500 selection:text-white">
+
+  <!-- =========================================================
+       1. STICKY TRANSLUCENT APPLE NAVIGATION & MEGA-MENU
+  ========================================================= -->
+  <header id="globalHeader" class="apple-nav fixed top-0 left-0 right-0 z-50 border-b border-black/5">
+    <nav class="max-w-[1024px] mx-auto px-4 sm:px-6 h-11 flex items-center justify-between text-[12px] tracking-[-0.01em] text-[#1d1d1f]/85">
+      <!-- Apple SVG Logo -->
+      <a href="#top" aria-label="Apple Bosh sahifa" class="p-2 -ml-2 text-[#1d1d1f] hover:opacity-70 transition-opacity flex items-center">
+        <svg class="w-[15px] h-[18px] fill-current" viewBox="0 0 170 170">
+          <path d="M150.37 130.25c-2.45 5.66-5.35 10.87-8.71 15.66-4.58 6.53-8.33 11.05-11.22 13.56-4.48 4.12-9.28 6.23-14.42 6.35-3.69 0-8.14-1.05-13.32-3.18-5.19-2.12-9.97-3.17-14.34-3.17-4.58 0-9.49 1.05-14.75 3.17-5.26 2.13-9.5 3.24-12.74 3.35-4.35.13-9.13-1.9-14.34-6.08-3.69-3.03-7.61-7.82-11.77-14.37-5.08-7.93-9.23-17.1-12.44-27.52-3.22-10.42-4.83-20.38-4.83-29.88 0-11.2 2.81-20.66 8.43-28.38 5.62-7.72 12.71-11.67 21.28-11.86 4.48 0 9.64 1.38 15.49 4.13 5.84 2.75 9.6 4.17 11.28 4.26 1.35 0 5.47-1.64 12.38-4.91 6.9-3.27 12.72-4.66 17.46-4.18 13.21 1.07 23.14 6.29 29.78 15.66-11.82 7.17-17.63 17.17-17.44 30 .19 10.02 3.92 18.35 11.2 24.99 4.94 4.53 10.67 7.36 17.19 8.49-1.45 4.48-3.09 8.85-4.92 13.11zM119.22 31.91c0 7.82-2.86 15.13-8.57 21.92-6.88 8.05-15.2 12.7-24.22 11.97-.15-.97-.23-2.01-.23-3.12 0-7.5 3.26-15.53 9.04-22.1 2.89-3.32 6.57-6.08 11.03-8.28 4.46-2.2 8.68-3.42 12.66-3.66.19 1.13.29 2.22.29 3.27z"/>
+        </svg>
+      </a>
+
+      <!-- Desktop Menu Links -->
+      <ul id="desktopNavItems" class="hidden lg:flex items-center justify-between flex-1 px-6">
+        <li><button data-menu="store" class="nav-trigger py-2 px-1.5 hover:text-black transition-colors">Store</button></li>
+        <li><button data-menu="mac" class="nav-trigger py-2 px-1.5 hover:text-black transition-colors">Mac</button></li>
+        <li><button data-menu="ipad" class="nav-trigger py-2 px-1.5 hover:text-black transition-colors">iPad</button></li>
+        <li><button data-menu="iphone" class="nav-trigger py-2 px-1.5 hover:text-black transition-colors">iPhone</button></li>
+        <li><button data-menu="watch" class="nav-trigger py-2 px-1.5 hover:text-black transition-colors">Watch</button></li>
+        <li><button data-menu="vision" class="nav-trigger py-2 px-1.5 hover:text-black transition-colors">Vision</button></li>
+        <li><button data-menu="airpods" class="nav-trigger py-2 px-1.5 hover:text-black transition-colors">AirPods</button></li>
+        <li><button data-menu="tvhome" class="nav-trigger py-2 px-1.5 hover:text-black transition-colors">TV &amp; Home</button></li>
+        <li><button data-menu="entertainment" class="nav-trigger py-2 px-1.5 hover:text-black transition-colors">Entertainment</button></li>
+        <li><button data-menu="accessories" class="nav-trigger py-2 px-1.5 hover:text-black transition-colors">Accessories</button></li>
+        <li><button data-menu="support" class="nav-trigger py-2 px-1.5 hover:text-black transition-colors">Support</button></li>
+      </ul>
+
+      <!-- Right Action Icons (Search, Bag, Mobile Menu) -->
+      <div class="flex items-center gap-3 sm:gap-4">
+        <!-- Search Trigger -->
+        <button id="searchTrigger" aria-label="Qidiruv" class="p-2 text-[#1d1d1f]/85 hover:text-black transition-colors">
+          <svg class="w-[15px] h-[15px]" fill="none" stroke="currentColor" stroke-width="1.7" viewBox="0 0 24 24">
+            <circle cx="11" cy="11" r="7.5"></circle>
+            <path stroke-linecap="round" d="M20.5 20.5L16.35 16.35"></path>
+          </svg>
+        </button>
+
+        <!-- Shopping Bag Trigger -->
+        <button id="bagTrigger" aria-label="Savat" class="relative p-2 text-[#1d1d1f]/85 hover:text-black transition-colors">
+          <svg class="w-[15px] h-[15px]" fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6 7h12l1 13H5L6 7z"></path>
+            <path stroke-linecap="round" d="M9 7V5a3 3 0 016 0v2"></path>
+          </svg>
+          <span id="bagBadge" class="hidden absolute -top-0.5 -right-0.5 bg-[#0071e3] text-white text-[10px] font-semibold w-4 h-4 rounded-full flex items-center justify-center">0</span>
+        </button>
+
+        <!-- Mobile Hamburger Trigger -->
+        <button id="mobileMenuBtn" aria-label="Menyu" class="lg:hidden p-2 -mr-2 text-[#1d1d1f] focus:outline-none">
+          <svg id="hamburgerIcon" class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24">
+            <path stroke-linecap="round" d="M4 8h16M4 16h16"></path>
+          </svg>
+          <svg id="closeMobileIcon" class="w-5 h-5 hidden" fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24">
+            <path stroke-linecap="round" d="M6 6l12 12M18 6L6 18"></path>
+          </svg>
+        </button>
+      </div>
+    </nav>
+
+    <!-- =========================================================
+         DESKTOP MEGA-MENU FLYOUT CONTAINER (HOVER DROPDOWN)
+    ========================================================= -->
+    <div id="megaMenuPanel" class="mega-menu-panel w-full bg-[#fbfbfd] border-b border-black/5 shadow-sm">
+      <div id="megaMenuContent" class="max-w-[1024px] mx-auto px-6 pt-8 pb-12">
+        <!-- Dynamically injected columns via JS -->
+      </div>
+    </div>
+
+    <!-- =========================================================
+         INTERACTIVE SEARCH FLYOUT PANEL
+    ========================================================= -->
+    <div id="searchPanel" class="mega-menu-panel w-full bg-[#fbfbfd] border-b border-black/5">
+      <div class="max-w-[1024px] mx-auto px-6 pt-8 pb-12">
+        <div class="flex items-center gap-3 border-b border-black/10 pb-3">
+          <svg class="w-5 h-5 text-[#86868b]" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+            <circle cx="11" cy="11" r="7.5"></circle>
+            <path stroke-linecap="round" d="M20.5 20.5L16.35 16.35"></path>
+          </svg>
+          <input
+            id="appleSearchInput"
+            type="text"
+            placeholder="apple.com bo‘ylab qidirish (masalan: iPhone 16 Pro, MacBook, Vision Pro...)"
+            class="w-full bg-transparent text-xl sm:text-2xl font-semibold text-[#1d1d1f] placeholder-[#86868b] focus:outline-none"
+          />
+          <button id="clearSearchBtn" class="text-xs text-[#86868b] hover:text-[#1d1d1f] px-2 py-1">Yopish</button>
+        </div>
+        <div class="mt-6">
+          <p class="text-xs font-medium text-[#86868b] uppercase tracking-wider mb-3">Tezkor havolalar</p>
+          <ul id="searchResultsList" class="space-y-2.5 text-sm font-medium text-[#1d1d1f]">
+            <li><a href="#iphone16pro" class="search-link flex items-center gap-2 hover:text-[#0071e3] transition-colors"><span>→</span> iPhone 16 Pro — Titanium &amp; Apple Intelligence</a></li>
+            <li><a href="#watch10" class="search-link flex items-center gap-2 hover:text-[#0071e3] transition-colors"><span>→</span> Apple Watch Series 10 — Eng yupqa korpus</a></li>
+            <li><a href="#bento-grid" class="search-link flex items-center gap-2 hover:text-[#0071e3] transition-colors"><span>→</span> MacBook Pro M4 &amp; iPad Pro OLED</a></li>
+            <li><a href="#apple-tv" class="search-link flex items-center gap-2 hover:text-[#0071e3] transition-colors"><span>→</span> Apple TV+ Premyeralar va Seriallar</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- =========================================================
+         INTERACTIVE SHOPPING BAG FLYOUT PANEL
+    ========================================================= -->
+    <div id="bagPanel" class="mega-menu-panel w-full bg-[#fbfbfd] border-b border-black/5">
+      <div class="max-w-[1024px] mx-auto px-6 pt-8 pb-12">
+        <div class="flex items-center justify-between mb-6">
+          <h3 class="text-2xl font-semibold tracking-tight text-[#1d1d1f]">Sizning savatingiz</h3>
+          <button id="closeBagBtn" class="text-sm text-[#0071e3] hover:underline">Yopish</button>
+        </div>
+        <div id="bagItemsContainer" class="space-y-4">
+          <p class="text-[#86868b] text-base">Savatingiz hozircha bo‘sh. Mahsulot qo‘shish uchun "Buy" tugmasini bosing.</p>
+        </div>
+        <div id="bagFooter" class="hidden mt-6 pt-5 border-t border-black/10 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div>
+            <span class="text-sm text-[#86868b]">Jami summa:</span>
+            <span id="bagTotalPrice" class="text-xl font-semibold text-[#1d1d1f] ml-2">$0</span>
+          </div>
+          <button onclick="checkoutDemo()" class="btn-apple-primary btn-sm">Buyurtmani rasmiylashtirish</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- =========================================================
+         MOBILE FULL-SCREEN ACCORDION MENU
+    ========================================================= -->
+    <div id="mobileDrawer" class="lg:hidden fixed inset-x-0 top-11 bottom-0 bg-[#fbfbfd] z-40 overflow-y-auto hidden transition-all duration-300 px-7 pt-6 pb-16">
+      <div id="mobileAccordionList" class="divide-y divide-black/10">
+        <!-- Populated dynamically from the same Mega-Menu data -->
+      </div>
+    </div>
+  </header>
+
+  <!-- Blurred Page Curtain Overlay when Mega Menu / Search / Bag is Active -->
+  <div id="pageCurtain" class="page-curtain fixed inset-0 bg-black/25 z-40"></div>
+
+  <!-- =========================================================
+       TOP RIBBON ANNOUNCEMENT BAR
+  ========================================================= -->
+  <div id="top" class="pt-11 bg-[#f5f5f7] border-b border-black/5">
+    <div class="max-w-[1024px] mx-auto px-4 py-3 text-center text-[13px] sm:text-[14px] text-[#1d1d1f]">
+      <span>iPhone 13 yoki undan yangi modelni topshirib, iPhone 16 Pro uchun $180 dan $650 gacha chegirma oling.</span>
+      <button onclick="openProductModal('Apple Trade In', 'Eski qurilmangizni yangisiga almashtiring', 'Hozirgi smartfoningiz qiymatini bir zumda baholang va yangi iPhone 16 Pro xaridida darhol chegirmaga ega bo‘ling.', '$650 gacha foyda', 'tradein')" class="text-[#0071e3] hover:underline inline-flex items-center ml-1 font-normal">
+        Batafsil ma’lumot <span class="ml-0.5 text-xs">›</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- =========================================================
+       2. HERO SECTION 1: iPhone 16 Pro (DARK LUXURY + LIVE CANVAS + COLOR SWITCHER)
+  ========================================================= -->
+  <section id="iphone16pro" class="relative w-full min-h-[640px] sm:min-h-[730px] bg-black text-white overflow-hidden flex flex-col justify-between pt-12 sm:pt-16 pb-10 select-none">
+    <!-- Procedural Apple Ambient Video/Motion Canvas Background -->
+    <canvas id="heroProCanvas" class="absolute inset-0 w-full h-full pointer-events-none opacity-90"></canvas>
+
+    <!-- Top Copy -->
+    <div class="relative z-10 text-center px-4 max-w-3xl mx-auto reveal-up">
+      <h1 class="text-[40px] sm:text-[56px] font-semibold tracking-[-0.025em] leading-[1.07]">
+        iPhone 16 Pro
+      </h1>
+      <p class="mt-1.5 text-[21px] sm:text-[28px] font-normal tracking-[-0.015em] text-[#f5f5f7]">
+        Hello, <span class="ai-gradient-text font-medium">Apple Intelligence.</span>
+      </p>
+
+      <!-- Action Pills -->
+      <div class="mt-5 flex items-center justify-center gap-4">
+        <button
+          onclick="openProductModal('iPhone 16 Pro', 'Titan korpus. A18 Pro chipi. Apple Intelligence.', 'Grade 5 titanidan ishlangan o‘ta mustahkam va yengil dizayn. 4K 120 fps Dolby Vision video yozish va yangi Camera Control tugmasi.', '$999 dan boshlab', 'iphone16pro')"
+          class="btn-apple-primary"
+        >
+          Learn more
+        </button>
+        <button
+          onclick="addToBag('iPhone 16 Pro (256GB — Desert Titanium)', 1099)"
+          class="btn-apple-dark-outline"
+        >
+          Buy
+        </button>
+      </div>
+    </div>
+
+    <!-- Interactive iPhone 16 Pro Hardware Showcase + Titanium Finish Selector -->
+    <div class="relative z-10 flex flex-col items-center justify-end mt-6 px-4 reveal-up">
+      <!-- Realistic Sleek Titanium iPhone 16 Pro Hardware Render -->
+      <div id="iphoneProFrame" class="titanium-glow relative w-[270px] sm:w-[320px] h-[350px] sm:h-[400px] rounded-t-[48px] border-t-[6px] border-x-[6px] border-[#bfa48f] bg-gradient-to-b from-[#1a1817] via-[#0d0d0f] to-black shadow-[0_-20px_70px_rgba(191,164,143,0.32)] flex flex-col items-center pt-4 overflow-hidden">
+        <!-- Dynamic Island -->
+        <div class="w-24 h-6 bg-black rounded-full border border-white/10 flex items-center justify-between px-2.5 shadow-inner">
+          <span class="w-2 h-2 rounded-full bg-[#1a2639]"></span>
+          <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+        </div>
+
+        <!-- Screen Glow & Apple Intelligence Wave -->
+        <div id="iphoneScreenGlow" class="mt-6 w-full px-5 flex-1 flex flex-col items-center justify-between pb-6">
+          <div class="text-center">
+            <span class="text-[11px] uppercase tracking-[0.22em] text-white/50">A18 PRO CHIP</span>
+            <p id="finishLabel" class="text-sm font-medium text-[#e5cfb8] mt-1">Desert Titanium</p>
+          </div>
+
+          <!-- Pro Triple Camera Module Visualization -->
+          <div class="relative w-36 h-36 rounded-[32px] bg-white/[0.04] border border-white/15 backdrop-blur-md p-3.5 grid grid-cols-2 gap-2.5 shadow-2xl animate-float">
+            <!-- Lens 1 -->
+            <div class="w-12 h-12 rounded-full bg-gradient-to-tr from-[#090d16] via-[#1c2c4c] to-[#3b5998] border-2 border-[#bfa48f]/70 flex items-center justify-center shadow-inner">
+              <div class="w-5 h-5 rounded-full bg-[#05070c] ring-2 ring-cyan-400/30"></div>
+            </div>
+            <!-- Flash & LiDAR -->
+            <div class="flex flex-col items-center justify-between py-1">
+              <div class="w-4 h-4 rounded-full bg-amber-100/90 shadow-[0_0_10px_#fef3c7]"></div>
+              <div class="w-5 h-5 rounded-full bg-[#151518] border border-white/20"></div>
+            </div>
+            <!-- Lens 2 -->
+            <div class="w-12 h-12 rounded-full bg-gradient-to-tr from-[#090d16] via-[#221c35] to-[#5a468c] border-2 border-[#bfa48f]/70 flex items-center justify-center shadow-inner">
+              <div class="w-5 h-5 rounded-full bg-[#05070c] ring-2 ring-purple-400/30"></div>
+            </div>
+            <!-- Lens 3 -->
+            <div class="w-12 h-12 -mt-6 rounded-full bg-gradient-to-tr from-[#090d16] via-[#16302b] to-[#2e6f65] border-2 border-[#bfa48f]/70 flex items-center justify-center shadow-inner">
+              <div class="w-5 h-5 rounded-full bg-[#05070c] ring-2 ring-emerald-400/30"></div>
+            </div>
+          </div>
+
+          <p class="text-[12px] text-[#86868b]">4K 120 fps Dolby Vision</p>
+        </div>
+      </div>
+
+      <!-- Interactive Titanium Color Swatches -->
+      <div class="mt-4 flex items-center gap-3 bg-white/10 backdrop-blur-md px-4 py-2 rounded-full border border-white/15">
+        <span class="text-xs text-white/70 mr-1">Rang:</span>
+        <button onclick="setTitaniumFinish('Desert Titanium', '#bfa48f', 'rgba(191,164,143,0.38)')" aria-label="Desert Titanium" class="w-5 h-5 rounded-full bg-[#bfa48f] ring-2 ring-white ring-offset-2 ring-offset-black transition-transform hover:scale-110"></button>
+        <button onclick="setTitaniumFinish('Natural Titanium', '#9a9893', 'rgba(154,152,147,0.38)')" aria-label="Natural Titanium" class="w-5 h-5 rounded-full bg-[#9a9893] hover:ring-2 hover:ring-white/70 transition-transform hover:scale-110"></button>
+        <button onclick="setTitaniumFinish('White Titanium', '#e8e8e6', 'rgba(232,232,230,0.35)')" aria-label="White Titanium" class="w-5 h-5 rounded-full bg-[#e8e8e6] hover:ring-2 hover:ring-white/70 transition-transform hover:scale-110"></button>
+        <button onclick="setTitaniumFinish('Black Titanium', '#3c3c3e', 'rgba(110,110,120,0.4)')" aria-label="Black Titanium" class="w-5 h-5 rounded-full bg-[#3c3c3e] hover:ring-2 hover:ring-white/70 transition-transform hover:scale-110"></button>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================
+       3. HERO SECTION 2: iPhone 16 (ULTRAMARINE VIBRANT EDITION)
+  ========================================================= -->
+  <section class="relative w-full min-h-[600px] sm:min-h-[690px] bg-gradient-to-b from-[#172554] via-[#2563eb] to-[#dbeafe] text-white overflow-hidden flex flex-col justify-between pt-14 sm:pt-16 pb-12 mt-3">
+    <div class="relative z-10 text-center px-4 max-w-3xl mx-auto reveal-up">
+      <h2 class="text-[40px] sm:text-[56px] font-semibold tracking-[-0.025em] leading-[1.07]">
+        iPhone 16
+      </h2>
+      <p class="mt-1.5 text-[21px] sm:text-[28px] font-normal tracking-[-0.015em] text-white/95">
+        Hello, Apple Intelligence.
+      </p>
+      <div class="mt-5 flex items-center justify-center gap-4">
+        <button
+          onclick="openProductModal('iPhone 16', 'Yangi Camera Control. A18 chipi. Yorqin Ultramarine.', '48MP Fusion kamera, yangi Action tugmasi va kun bo‘yi yetadigan quvvat — endi yanada yorqin ranglarda.', '$799 dan boshlab', 'iphone16')"
+          class="bg-white text-[#1d1d1f] hover:bg-white/90 rounded-full px-6 py-2.5 text-[17px] font-normal transition-all hover:scale-105"
+        >
+          Learn more
+        </button>
+        <button
+          onclick="addToBag('iPhone 16 (128GB — Ultramarine)', 799)"
+          class="border border-white text-white hover:bg-white hover:text-[#1d1d1f] rounded-full px-6 py-2.5 text-[17px] font-normal transition-all hover:scale-105"
+        >
+          Buy
+        </button>
+      </div>
+    </div>
+
+    <!-- Center Showcase: Vibrant Dual-Camera iPhone 16 Lineup -->
+    <div class="relative z-10 max-w-4xl mx-auto w-full px-4 mt-8 flex items-end justify-center gap-3 sm:gap-6 reveal-up">
+      <!-- Left Phone (Teal) -->
+      <div class="hidden sm:flex w-44 h-64 rounded-t-[36px] bg-gradient-to-b from-[#5eead4] to-[#0f766e] border-t-4 border-x-4 border-white/60 shadow-2xl p-4 flex-col justify-between transform -rotate-6 translate-y-6">
+        <div class="w-12 h-24 rounded-full bg-[#0d9488]/90 border border-white/40 p-1.5 flex flex-col justify-between items-center">
+          <div class="w-8 h-8 rounded-full bg-[#042f2e] border-2 border-teal-200"></div>
+          <div class="w-8 h-8 rounded-full bg-[#042f2e] border-2 border-teal-200"></div>
+        </div>
+        <span class="text-xs font-semibold text-white/90 text-center">Teal</span>
+      </div>
+
+      <!-- Center Main Phone (Ultramarine) -->
+      <div class="w-56 sm:w-64 h-72 sm:h-80 rounded-t-[42px] bg-gradient-to-b from-[#60a5fa] via-[#3b82f6] to-[#1d4ed8] border-t-[5px] border-x-[5px] border-white/80 shadow-[0_25px_70px_rgba(29,78,216,0.45)] p-5 flex flex-col justify-between animate-float">
+        <div class="flex items-start justify-between">
+          <div class="w-14 h-28 rounded-full bg-[#2563eb] border border-white/50 p-2 flex flex-col justify-between items-center shadow-lg">
+            <div class="w-9 h-9 rounded-full bg-[#0f172a] border-2 border-blue-200 flex items-center justify-center">
+              <div class="w-3.5 h-3.5 rounded-full bg-blue-500/40"></div>
+            </div>
+            <div class="w-9 h-9 rounded-full bg-[#0f172a] border-2 border-blue-200 flex items-center justify-center">
+              <div class="w-3.5 h-3.5 rounded-full bg-blue-500/40"></div>
+            </div>
+          </div>
+          <div class="w-4 h-4 rounded-full bg-amber-100 mt-4 mr-4 shadow"></div>
+        </div>
+        <div class="text-center">
+          <span class="inline-block px-3 py-1 rounded-full bg-white/20 backdrop-blur-md text-xs font-medium text-white">Ultramarine • A18</span>
+        </div>
+      </div>
+
+      <!-- Right Phone (Pink) -->
+      <div class="hidden sm:flex w-44 h-64 rounded-t-[36px] bg-gradient-to-b from-[#f9a8d4] to-[#db2777] border-t-4 border-x-4 border-white/60 shadow-2xl p-4 flex-col justify-between transform rotate-6 translate-y-6">
+        <div class="w-12 h-24 rounded-full bg-[#ec4899]/90 border border-white/40 p-1.5 flex flex-col justify-between items-center">
+          <div class="w-8 h-8 rounded-full bg-[#500724] border-2 border-pink-200"></div>
+          <div class="w-8 h-8 rounded-full bg-[#500724] border-2 border-pink-200"></div>
+        </div>
+        <span class="text-xs font-semibold text-white/90 text-center">Pink</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================
+       4. HERO SECTION 3: APPLE WATCH SERIES 10 (LIGHT GALLERY THEME)
+  ========================================================= -->
+  <section id="watch10" class="relative w-full min-h-[600px] sm:min-h-[680px] bg-[#f5f5f7] text-[#1d1d1f] overflow-hidden flex flex-col justify-between pt-14 sm:pt-16 pb-12 mt-3">
+    <div class="relative z-10 text-center px-4 max-w-3xl mx-auto reveal-up">
+      <div class="inline-flex items-center justify-center gap-1.5">
+        <svg class="w-7 h-7 fill-current text-[#1d1d1f]" viewBox="0 0 170 170">
+          <path d="M150.37 130.25c-2.45 5.66-5.35 10.87-8.71 15.66-4.58 6.53-8.33 11.05-11.22 13.56-4.48 4.12-9.28 6.23-14.42 6.35-3.69 0-8.14-1.05-13.32-3.18-5.19-2.12-9.97-3.17-14.34-3.17-4.58 0-9.49 1.05-14.75 3.17-5.26 2.13-9.5 3.24-12.74 3.35-4.35.13-9.13-1.9-14.34-6.08-3.69-3.03-7.61-7.82-11.77-14.37-5.08-7.93-9.23-17.1-12.44-27.52-3.22-10.42-4.83-20.38-4.83-29.88 0-11.2 2.81-20.66 8.43-28.38 5.62-7.72 12.71-11.67 21.28-11.86 4.48 0 9.64 1.38 15.49 4.13 5.84 2.75 9.6 4.17 11.28 4.26 1.35 0 5.47-1.64 12.38-4.91 6.9-3.27 12.72-4.66 17.46-4.18 13.21 1.07 23.14 6.29 29.78 15.66-11.82 7.17-17.63 17.17-17.44 30 .19 10.02 3.92 18.35 11.2 24.99 4.94 4.53 10.67 7.36 17.19 8.49-1.45 4.48-3.09 8.85-4.92 13.11zM119.22 31.91c0 7.82-2.86 15.13-8.57 21.92-6.88 8.05-15.2 12.7-24.22 11.97-.15-.97-.23-2.01-.23-3.12 0-7.5 3.26-15.53 9.04-22.1 2.89-3.32 6.57-6.08 11.03-8.28 4.46-2.2 8.68-3.42 12.66-3.66.19 1.13.29 2.22.29 3.27z"/>
+        </svg>
+        <span class="text-[32px] sm:text-[42px] font-bold tracking-tight">WATCH</span>
+      </div>
+      <p class="text-xs sm:text-sm font-bold tracking-[0.2em] text-[#1d1d1f] uppercase mt-0.5">SERIES 10</p>
+      <p class="mt-2 text-[21px] sm:text-[28px] font-normal tracking-[-0.015em] text-[#1d1d1f]">
+        Thinstant classic.
+      </p>
+      <div class="mt-5 flex items-center justify-center gap-4">
+        <button
+          onclick="openProductModal('Apple Watch Series 10', 'Eng katta displey. Eng yupqa dizayn.', 'Jet Black alyuminiy korpus, keng burchakli OLED displey, suv harorati va chuqurlik sensorlari hamda 30 daqiqada 80% tezkor quvvatlash.', '$399 dan boshlab', 'watch10')"
+          class="btn-apple-primary"
+        >
+          Learn more
+        </button>
+        <button
+          onclick="addToBag('Apple Watch Series 10 (Jet Black, 46mm)', 429)"
+          class="btn-apple-secondary"
+        >
+          Buy
+        </button>
+      </div>
+    </div>
+
+    <!-- Live Interactive Apple Watch Series 10 Hardware & Real-time Clock -->
+    <div class="relative z-10 flex items-center justify-center mt-8 px-4 reveal-up">
+      <div class="relative flex flex-col items-center">
+        <!-- Top Sport Band -->
+        <div class="w-32 h-14 bg-gradient-to-b from-[#2c2c2e] to-[#1c1c1e] rounded-t-3xl shadow-md"></div>
+        <!-- Jet Black Watch Case -->
+        <div class="relative w-56 h-64 rounded-[54px] bg-gradient-to-tr from-[#09090b] via-[#27272a] to-[#52525b] p-2.5 shadow-[0_30px_60px_rgba(0,0,0,0.28)]">
+          <!-- Digital Crown & Side Button -->
+          <div class="absolute -right-2 top-14 w-2 h-10 bg-zinc-700 rounded-r-md border-l border-black"></div>
+          <div class="absolute -right-1.5 top-28 w-1.5 h-14 bg-zinc-700 rounded-r-md"></div>
+          <!-- Wide-Angle OLED Watch Face -->
+          <div class="w-full h-full rounded-[44px] bg-black flex flex-col items-center justify-between p-5 text-white relative overflow-hidden">
+            <div class="w-full flex justify-between items-center text-[11px] font-semibold text-orange-400">
+              <span>24°C</span>
+              <span>BPM 72</span>
+            </div>
+            <!-- Live Real-Time Watch Clock -->
+            <div class="text-center my-auto">
+              <div id="liveWatchTime" class="text-5xl font-bold tracking-tight bg-gradient-to-b from-white to-zinc-400 bg-clip-text text-transparent">10:09</div>
+              <div id="liveWatchDate" class="text-xs text-zinc-400 mt-1 tracking-wider uppercase">CHORSHANBA • 18</div>
+            </div>
+            <!-- Activity Rings SVG -->
+            <div class="flex items-center gap-3">
+              <svg class="w-9 h-9 -rotate-90" viewBox="0 0 36 36">
+                <circle cx="18" cy="18" r="15" fill="none" stroke="#3f151e" stroke-width="3"></circle>
+                <circle cx="18" cy="18" r="15" fill="none" stroke="#fa114f" stroke-width="3" stroke-dasharray="78 100" stroke-linecap="round"></circle>
+                <circle cx="18" cy="18" r="11" fill="none" stroke="#1b3815" stroke-width="3"></circle>
+                <circle cx="18" cy="18" r="11" fill="none" stroke="#a6ff00" stroke-width="3" stroke-dasharray="55 100" stroke-linecap="round"></circle>
+                <circle cx="18" cy="18" r="7" fill="none" stroke="#10343a" stroke-width="3"></circle>
+                <circle cx="18" cy="18" r="7" fill="none" stroke="#00f5ea" stroke-width="3" stroke-dasharray="40 100" stroke-linecap="round"></circle>
+              </svg>
+              <span class="text-[11px] text-zinc-300 font-medium">Jet Black</span>
+            </div>
+          </div>
+        </div>
+        <!-- Bottom Sport Band -->
+        <div class="w-32 h-14 bg-gradient-to-t from-[#2c2c2e] to-[#1c1c1e] rounded-b-3xl shadow-md"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================
+       5. DUAL-COLUMN BENTO PROMO GRID (6 APPLE FLAGSHIP PRODUCTS)
+  ========================================================= -->
+  <section id="bento-grid" class="max-w-[1440px] mx-auto px-0 sm:px-3 mt-3">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+
+      <!-- BENTO CARD 1: iPad Pro (Dark Theme) -->
+      <article class="bento-card min-h-[540px] sm:min-h-[580px] bg-black text-white flex flex-col justify-between pt-12 pb-8 px-6 text-center reveal-up">
+        <div class="relative z-10">
+          <h3 class="text-[32px] sm:text-[40px] font-semibold tracking-tight leading-tight">iPad Pro</h3>
+          <p class="mt-1 text-[19px] sm:text-[21px] text-[#f5f5f7]">Unbelievably thin. Incredibly powerful.</p>
+          <div class="mt-4 flex items-center justify-center gap-3">
+            <button onclick="openProductModal('iPad Pro M4', 'Ultra Retina XDR displey. M4 chipi.', 'Apple tarixidagi eng yupqa qurilma (atigi 5.1 mm). Tandem OLED ekran va Apple Pencil Pro bilan cheksiz ijod.', '$999 dan boshlab', 'ipadpro')" class="btn-apple-primary btn-sm">Learn more</button>
+            <button onclick="addToBag('iPad Pro 13-inch M4 (Space Black)', 1299)" class="btn-apple-dark-outline btn-sm">Buy</button>
+          </div>
+        </div>
+        <!-- Ultra-Thin iPad Pro Visual -->
+        <div class="bento-visual relative z-10 mt-8 mx-auto w-full max-w-[380px] h-[250px] rounded-2xl border-[3px] border-zinc-700 bg-gradient-to-tr from-[#09090b] via-[#1e1b4b] to-[#312e81] p-4 shadow-[0_0_60px_rgba(99,102,241,0.35)] flex flex-col justify-between">
+          <div class="flex justify-between items-center text-[11px] text-indigo-200/80">
+            <span>M4 CHIP</span>
+            <span>5.1 mm THIN</span>
+          </div>
+          <div class="my-auto">
+            <div class="w-36 h-36 mx-auto rounded-full bg-gradient-to-tr from-cyan-400 via-indigo-500 to-fuchsia-500 blur-md opacity-80 animate-pulse-glow"></div>
+            <p class="relative -mt-24 text-lg font-semibold tracking-tight text-white">Tandem OLED</p>
+          </div>
+          <div class="h-1.5 w-28 mx-auto bg-white/30 rounded-full"></div>
+        </div>
+      </article>
+
+      <!-- BENTO CARD 2: MacBook Air M3 (Light Theme) -->
+      <article class="bento-card min-h-[540px] sm:min-h-[580px] bg-[#f5f5f7] text-[#1d1d1f] flex flex-col justify-between pt-12 pb-8 px-6 text-center reveal-up">
+        <div class="relative z-10">
+          <h3 class="text-[32px] sm:text-[40px] font-semibold tracking-tight leading-tight">MacBook Air</h3>
+          <p class="mt-1 text-[19px] sm:text-[21px] text-[#1d1d1f]">Lean. Mean. M3 machine.</p>
+          <div class="mt-4 flex items-center justify-center gap-3">
+            <button onclick="openProductModal('MacBook Air 13” va 15”', 'Super-yengil. M3 chipi bilan 18 soatgacha batareya.', 'Ikkita tashqi monitorgacha qo‘llab-quvvatlash, Liquid Retina displey va mutlaqo shovqinsiz ventilyatorsiz dizayn.', '$1,099 dan boshlab', 'macbookair')" class="btn-apple-primary btn-sm">Learn more</button>
+            <button onclick="addToBag('MacBook Air 15-inch M3 (Midnight)', 1299)" class="btn-apple-secondary btn-sm">Buy</button>
+          </div>
+        </div>
+        <!-- Sleek MacBook Air Visual -->
+        <div class="bento-visual relative z-10 mt-8 mx-auto w-full max-w-[400px] flex flex-col items-center">
+          <div class="w-[86%] h-[210px] rounded-t-2xl bg-[#1d1d1f] p-2 shadow-xl border border-zinc-600">
+            <div class="w-full h-full rounded-lg bg-gradient-to-br from-[#0ea5e9] via-[#2563eb] to-[#1e1b4b] flex flex-col items-center justify-center text-white p-4">
+              <span class="text-xs uppercase tracking-widest text-sky-200">Apple M3</span>
+              <p class="text-2xl font-bold mt-1">18 soat quvvat</p>
+            </div>
+          </div>
+          <div class="w-full h-3.5 bg-gradient-to-b from-zinc-300 to-zinc-400 rounded-b-xl shadow-md flex justify-center">
+            <div class="w-16 h-1 bg-zinc-500/50 rounded-b"></div>
+          </div>
+        </div>
+      </article>
+
+      <!-- BENTO CARD 3: AirPods Pro 2 (Dark Theme) -->
+      <article class="bento-card min-h-[540px] sm:min-h-[580px] bg-black text-white flex flex-col justify-between pt-12 pb-8 px-6 text-center reveal-up">
+        <div class="relative z-10">
+          <h3 class="text-[32px] sm:text-[40px] font-semibold tracking-tight leading-tight">AirPods Pro 2</h3>
+          <p class="mt-1 text-[19px] sm:text-[21px] text-[#f5f5f7]">Now with a Hearing Aid feature.</p>
+          <div class="mt-4 flex items-center justify-center gap-3">
+            <button onclick="openProductModal('AirPods Pro 2 (USB-C)', 'H2 chipi. 2 barobar kuchliroq shovqinni bostirish.', 'Adaptive Audio, Personalized Spatial Audio va yangi eshitish salomatligi funksiyalari bilan mukammal ovoz.', '$249', 'airpodspro')" class="btn-apple-primary btn-sm">Learn more</button>
+            <button onclick="addToBag('AirPods Pro 2 (MagSafe USB-C)', 249)" class="btn-apple-dark-outline btn-sm">Buy</button>
+          </div>
+        </div>
+        <!-- AirPods Pro 2 Visual -->
+        <div class="bento-visual relative z-10 my-auto py-6 flex items-center justify-center gap-8">
+          <!-- Left Bud -->
+          <div class="w-20 h-36 rounded-full bg-gradient-to-b from-white via-zinc-100 to-zinc-300 p-3 shadow-[0_0_50px_rgba(255,255,255,0.2)] flex flex-col justify-between items-center transform -rotate-12">
+            <div class="w-12 h-12 rounded-full bg-zinc-900 border-4 border-zinc-200"></div>
+            <div class="w-3 h-14 bg-zinc-200 rounded-full border border-zinc-300"></div>
+          </div>
+          <!-- Right Bud -->
+          <div class="w-20 h-36 rounded-full bg-gradient-to-b from-white via-zinc-100 to-zinc-300 p-3 shadow-[0_0_50px_rgba(255,255,255,0.2)] flex flex-col justify-between items-center transform rotate-12">
+            <div class="w-12 h-12 rounded-full bg-zinc-900 border-4 border-zinc-200"></div>
+            <div class="w-3 h-14 bg-zinc-200 rounded-full border border-zinc-300"></div>
+          </div>
+        </div>
+      </article>
+
+      <!-- BENTO CARD 4: Apple Vision Pro (Light Gallery Theme) -->
+      <article class="bento-card min-h-[540px] sm:min-h-[580px] bg-[#f5f5f7] text-[#1d1d1f] flex flex-col justify-between pt-12 pb-8 px-6 text-center reveal-up">
+        <div class="relative z-10">
+          <div class="inline-flex items-center justify-center gap-1.5">
+            <svg class="w-6 h-6 fill-current" viewBox="0 0 170 170">
+              <path d="M150.37 130.25c-2.45 5.66-5.35 10.87-8.71 15.66-4.58 6.53-8.33 11.05-11.22 13.56-4.48 4.12-9.28 6.23-14.42 6.35-3.69 0-8.14-1.05-13.32-3.18-5.19-2.12-9.97-3.17-14.34-3.17-4.58 0-9.49 1.05-14.75 3.17-5.26 2.13-9.5 3.24-12.74 3.35-4.35.13-9.13-1.9-14.34-6.08-3.69-3.03-7.61-7.82-11.77-14.37-5.08-7.93-9.23-17.1-12.44-27.52-3.22-10.42-4.83-20.38-4.83-29.88 0-11.2 2.81-20.66 8.43-28.38 5.62-7.72 12.71-11.67 21.28-11.86 4.48 0 9.64 1.38 15.49 4.13 5.84 2.75 9.6 4.17 11.28 4.26 1.35 0 5.47-1.64 12.38-4.91 6.9-3.27 12.72-4.66 17.46-4.18 13.21 1.07 23.14 6.29 29.78 15.66-11.82 7.17-17.63 17.17-17.44 30 .19 10.02 3.92 18.35 11.2 24.99 4.94 4.53 10.67 7.36 17.19 8.49-1.45 4.48-3.09 8.85-4.92 13.11zM119.22 31.91c0 7.82-2.86 15.13-8.57 21.92-6.88 8.05-15.2 12.7-24.22 11.97-.15-.97-.23-2.01-.23-3.12 0-7.5 3.26-15.53 9.04-22.1 2.89-3.32 6.57-6.08 11.03-8.28 4.46-2.2 8.68-3.42 12.66-3.66.19 1.13.29 2.22.29 3.27z"/>
+            </svg>
+            <h3 class="text-[32px] sm:text-[40px] font-semibold tracking-tight leading-tight">Vision Pro</h3>
+          </div>
+          <p class="mt-1 text-[19px] sm:text-[21px] text-[#1d1d1f]">The era of spatial computing is here.</p>
+          <div class="mt-4 flex items-center justify-center gap-3">
+            <button onclick="openProductModal('Apple Vision Pro', 'Fazoviy kompyuterlash davri.', 'visionOS operatsion tizimi, ko‘z va qo‘l harakatlari bilan boshqaruv, har bir ko‘z uchun 4K dan yuqori micro-OLED displey.', '$3,499 dan boshlab', 'visionpro')" class="btn-apple-primary btn-sm">Learn more</button>
+            <button onclick="addToBag('Apple Vision Pro (256GB)', 3499)" class="btn-apple-secondary btn-sm">Buy</button>
+          </div>
+        </div>
+        <!-- Spatial Headset Visor Visual -->
+        <div class="bento-visual relative z-10 my-auto py-8 flex items-center justify-center">
+          <div class="relative w-72 h-32 rounded-[52px] bg-gradient-to-b from-zinc-900 via-zinc-800 to-black border-4 border-zinc-300 shadow-[0_25px_50px_rgba(0,0,0,0.22)] flex items-center justify-center overflow-hidden">
+            <div class="absolute inset-0 bg-gradient-to-tr from-sky-400/25 via-purple-400/20 to-amber-300/25"></div>
+            <div class="w-56 h-16 rounded-full border border-white/20 backdrop-blur-sm flex items-center justify-center">
+              <span class="text-xs font-medium tracking-[0.25em] text-white/80 uppercase">visionOS 2</span>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- BENTO CARD 5: MacBook Pro (Dark Theme) -->
+      <article class="bento-card min-h-[540px] sm:min-h-[580px] bg-black text-white flex flex-col justify-between pt-12 pb-8 px-6 text-center reveal-up">
+        <div class="relative z-10">
+          <h3 class="text-[32px] sm:text-[40px] font-semibold tracking-tight leading-tight">MacBook Pro</h3>
+          <p class="mt-1 text-[19px] sm:text-[21px] text-[#f5f5f7]">A work of smart.</p>
+          <div class="mt-4 flex items-center justify-center gap-3">
+            <button onclick="openProductModal('MacBook Pro 14” va 16”', 'M4, M4 Pro va M4 Max chipi bilan.', '24 soatgacha rekord darajadagi batareya quvvati, Thunderbolt 5 portlari va Nano-texture Liquid Retina XDR displey.', '$1,599 dan boshlab', 'macbookpro')" class="btn-apple-primary btn-sm">Learn more</button>
+            <button onclick="addToBag('MacBook Pro 16-inch M4 Pro (Space Black)', 2499)" class="btn-apple-dark-outline btn-sm">Buy</button>
+          </div>
+        </div>
+        <!-- Space Black MacBook Pro Visual -->
+        <div class="bento-visual relative z-10 mt-8 mx-auto w-full max-w-[400px] flex flex-col items-center">
+          <div class="w-[88%] h-[215px] rounded-t-2xl bg-[#09090b] p-2 border border-zinc-700 shadow-[0_-15px_50px_rgba(59,130,246,0.2)]">
+            <div class="w-full h-full rounded-lg bg-gradient-to-tr from-black via-[#172554] to-[#0284c7] flex flex-col items-center justify-center p-4">
+              <span class="px-2.5 py-0.5 rounded-full bg-white/10 text-[11px] tracking-widest text-sky-300">M4 MAX</span>
+              <p class="text-2xl font-semibold mt-2 text-white">Pro Performance</p>
+            </div>
+          </div>
+          <div class="w-full h-3.5 bg-zinc-800 rounded-b-xl border-t border-zinc-600"></div>
+        </div>
+      </article>
+
+      <!-- BENTO CARD 6: Apple Trade In (Light Theme) -->
+      <article class="bento-card min-h-[540px] sm:min-h-[580px] bg-[#f5f5f7] text-[#1d1d1f] flex flex-col justify-between pt-12 pb-8 px-6 text-center reveal-up">
+        <div class="relative z-10">
+          <div class="inline-flex items-center justify-center gap-1.5">
+            <svg class="w-6 h-6 fill-current" viewBox="0 0 170 170">
+              <path d="M150.37 130.25c-2.45 5.66-5.35 10.87-8.71 15.66-4.58 6.53-8.33 11.05-11.22 13.56-4.48 4.12-9.28 6.23-14.42 6.35-3.69 0-8.14-1.05-13.32-3.18-5.19-2.12-9.97-3.17-14.34-3.17-4.58 0-9.49 1.05-14.75 3.17-5.26 2.13-9.5 3.24-12.74 3.35-4.35.13-9.13-1.9-14.34-6.08-3.69-3.03-7.61-7.82-11.77-14.37-5.08-7.93-9.23-17.1-12.44-27.52-3.22-10.42-4.83-20.38-4.83-29.88 0-11.2 2.81-20.66 8.43-28.38 5.62-7.72 12.71-11.67 21.28-11.86 4.48 0 9.64 1.38 15.49 4.13 5.84 2.75 9.6 4.17 11.28 4.26 1.35 0 5.47-1.64 12.38-4.91 6.9-3.27 12.72-4.66 17.46-4.18 13.21 1.07 23.14 6.29 29.78 15.66-11.82 7.17-17.63 17.17-17.44 30 .19 10.02 3.92 18.35 11.2 24.99 4.94 4.53 10.67 7.36 17.19 8.49-1.45 4.48-3.09 8.85-4.92 13.11zM119.22 31.91c0 7.82-2.86 15.13-8.57 21.92-6.88 8.05-15.2 12.7-24.22 11.97-.15-.97-.23-2.01-.23-3.12 0-7.5 3.26-15.53 9.04-22.1 2.89-3.32 6.57-6.08 11.03-8.28 4.46-2.2 8.68-3.42 12.66-3.66.19 1.13.29 2.22.29 3.27z"/>
+            </svg>
+            <h3 class="text-[32px] sm:text-[40px] font-semibold tracking-tight leading-tight">Trade In</h3>
+          </div>
+          <p class="mt-1 text-[19px] sm:text-[21px] text-[#1d1d1f] max-w-sm mx-auto">Get $180–$650 in credit when you trade in iPhone 12 or higher.</p>
+          <div class="mt-4">
+            <button onclick="openProductModal('Apple Trade In Kalkulyator', 'Eski qurilmangizni foydali almashtiring.', 'iPhone 12, 13, 14 yoki 15 modelini topshirib yangi qurilma narxini sezilarli kamaytiring yoki Apple Gift Card oling.', '$180 – $650 kredit', 'tradein')" class="btn-apple-primary btn-sm">Get your estimate</button>
+          </div>
+        </div>
+        <!-- Dual Exchange Phones Visual -->
+        <div class="bento-visual relative z-10 my-auto py-6 flex items-center justify-center gap-4">
+          <div class="w-28 h-48 rounded-3xl bg-white border-2 border-zinc-300 shadow-lg p-3 flex flex-col justify-between transform -rotate-6">
+            <span class="text-[10px] font-semibold text-zinc-400">Eski iPhone</span>
+            <span class="text-xs font-bold text-[#0071e3]">→ Almashtirish</span>
+          </div>
+          <div class="w-28 h-48 rounded-3xl bg-gradient-to-b from-zinc-800 to-black border-2 border-[#bfa48f] shadow-xl p-3 flex flex-col justify-between text-white transform rotate-6">
+            <span class="text-[10px] font-semibold text-[#e5cfb8]">iPhone 16 Pro</span>
+            <span class="text-xs font-bold text-emerald-400">-$650 chegirma</span>
+          </div>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- =========================================================
+       6. INTERACTIVE APPLE TV+ CINEMATIC CAROUSEL
+  ========================================================= -->
+  <section id="apple-tv" class="w-full py-12 bg-white overflow-hidden">
+    <div class="max-w-[1440px] mx-auto px-4 mb-6 flex items-center justify-between">
+      <div class="flex items-center gap-2">
+        <span class="text-xl sm:text-2xl font-bold tracking-tight text-[#1d1d1f]">Apple TV+</span>
+        <span class="text-xs sm:text-sm text-[#86868b] hidden sm:inline">• Eksklyuziv premyeralar</span>
+      </div>
+      <div class="flex items-center gap-2">
+        <button id="tvPrevBtn" aria-label="Oldingi film" class="w-9 h-9 rounded-full bg-[#f5f5f7] hover:bg-zinc-200 flex items-center justify-center text-[#1d1d1f] transition-colors">
+          ‹
+        </button>
+        <button id="tvNextBtn" aria-label="Keyingi film" class="w-9 h-9 rounded-full bg-[#f5f5f7] hover:bg-zinc-200 flex items-center justify-center text-[#1d1d1f] transition-colors">
+          ›
+        </button>
+      </div>
+    </div>
+
+    <!-- Carousel Track Container -->
+    <div class="relative w-full">
+      <div id="tvCarouselTrack" class="flex items-center gap-4 sm:gap-6 px-4 sm:px-[12vw] transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)]">
+        <!-- Slides injected dynamically via JS -->
+      </div>
+    </div>
+
+    <!-- Pagination Dots & Play/Pause Auto-Scroll Control -->
+    <div class="mt-6 flex items-center justify-center gap-4">
+      <div id="tvPaginationDots" class="flex items-center gap-2.5"></div>
+      <button id="tvAutoPlayToggle" aria-label="Avto-aylanishni boshqarish" class="w-7 h-7 rounded-full border border-black/20 flex items-center justify-center text-xs text-[#1d1d1f] hover:bg-black/5 transition-colors" title="Play / Pause">
+        ❚❚
+      </button>
+    </div>
+  </section>
+
+  <!-- =========================================================
+       7. AUTHENTIC MULTI-COLUMN APPLE FOOTER
+  ========================================================= -->
+  <footer class="bg-[#f5f5f7] text-[#6e6e73] text-[12px] leading-[1.33337] border-t border-black/10">
+    <div class="max-w-[980px] mx-auto px-4 sm:px-6 pt-6 pb-10">
+      <!-- Legal Footnotes -->
+      <div class="space-y-2.5 pb-6 border-b border-black/10 text-[11px] text-[#86868b]">
+        <p>1. Trade-in qiymatlari topshirilayotgan qurilmaning holati, yili va konfiguratsiyasiga qarab farq qiladi. Taklif barcha hududlarda mavjud bo‘lmasligi mumkin.</p>
+        <p>2. Apple Intelligence barcha iPhone 16 modellari, iPhone 15 Pro, iPhone 15 Pro Max hamda M1 va undan yangi chipli iPad va Mac qurilmalarida bepul dasturiy yangilanish sifatida taqdim etiladi.</p>
+        <p>3. Apple TV+ obunasi bepul sinov muddati tugaganidan so‘ng oyiga $9.99 ni tashkil qiladi. Istalgan vaqtda bekor qilish mumkin.</p>
+      </div>
+
+      <!-- Footer Navigation Columns (Accordion on Mobile, 5 Columns on Desktop) -->
+      <div id="footerColumns" class="py-6 grid grid-cols-1 md:grid-cols-5 gap-6 border-b border-black/10">
+        <div>
+          <h4 class="font-semibold text-[#1d1d1f] mb-2.5">Shop and Learn</h4>
+          <ul class="space-y-2">
+            <li><a href="#top" class="hover:underline">Store</a></li>
+            <li><a href="#bento-grid" class="hover:underline">Mac</a></li>
+            <li><a href="#bento-grid" class="hover:underline">iPad</a></li>
+            <li><a href="#iphone16pro" class="hover:underline">iPhone</a></li>
+            <li><a href="#watch10" class="hover:underline">Watch</a></li>
+            <li><a href="#bento-grid" class="hover:underline">Vision</a></li>
+            <li><a href="#bento-grid" class="hover:underline">AirPods</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="font-semibold text-[#1d1d1f] mb-2.5">Account &amp; Wallet</h4>
+          <ul class="space-y-2">
+            <li><a href="#top" class="hover:underline">Manage Your Apple Account</a></li>
+            <li><a href="#top" class="hover:underline">Apple Store Account</a></li>
+            <li><a href="#top" class="hover:underline">iCloud.com</a></li>
+            <li><a href="#top" class="hover:underline">Apple Pay</a></li>
+            <li><a href="#top" class="hover:underline">Apple Cash</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="font-semibold text-[#1d1d1f] mb-2.5">Entertainment</h4>
+          <ul class="space-y-2">
+            <li><a href="#apple-tv" class="hover:underline">Apple One</a></li>
+            <li><a href="#apple-tv" class="hover:underline">Apple TV+</a></li>
+            <li><a href="#apple-tv" class="hover:underline">Apple Music</a></li>
+            <li><a href="#apple-tv" class="hover:underline">Apple Arcade</a></li>
+            <li><a href="#apple-tv" class="hover:underline">Apple Podcasts</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="font-semibold text-[#1d1d1f] mb-2.5">Apple Store</h4>
+          <ul class="space-y-2">
+            <li><a href="#top" class="hover:underline">Find a Store</a></li>
+            <li><a href="#top" class="hover:underline">Genius Bar</a></li>
+            <li><a href="#bento-grid" class="hover:underline">Apple Trade In</a></li>
+            <li><a href="#top" class="hover:underline">Financing</a></li>
+            <li><a href="#top" class="hover:underline">Order Status</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="font-semibold text-[#1d1d1f] mb-2.5">About Apple</h4>
+          <ul class="space-y-2">
+            <li><a href="#top" class="hover:underline">Newsroom</a></li>
+            <li><a href="#top" class="hover:underline">Apple Leadership</a></li>
+            <li><a href="#top" class="hover:underline">Career Opportunities</a></li>
+            <li><a href="#top" class="hover:underline">Investors</a></li>
+            <li><a href="#top" class="hover:underline">Ethics &amp; Compliance</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Bottom Copyright Bar -->
+      <div class="pt-5 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-[11px] text-[#86868b]">
+        <p>Copyright © 2026 Apple Inc. Barcha huquqlar himoyalangan. (Amaliyot va dizayn musobaqasi uchun yaratilgan).</p>
+        <div class="flex flex-wrap gap-3">
+          <a href="#top" class="hover:underline">Privacy Policy</a>
+          <span>|</span>
+          <a href="#top" class="hover:underline">Terms of Use</a>
+          <span>|</span>
+          <a href="#top" class="hover:underline">Sales and Refunds</a>
+          <span>|</span>
+          <span class="text-[#1d1d1f] font-medium">O‘zbekiston</span>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- =========================================================
+       8. INTERACTIVE PRODUCT DETAIL & TRAILER MODAL
+  ========================================================= -->
+  <div id="productModal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-black/50 backdrop-blur-md">
+    <div class="bg-white rounded-3xl max-w-lg w-full p-6 sm:p-8 shadow-2xl relative transform transition-all">
+      <button onclick="closeProductModal()" aria-label="Yopish" class="absolute top-5 right-5 w-8 h-8 rounded-full bg-[#f5f5f7] hover:bg-zinc-200 flex items-center justify-center text-[#1d1d1f] font-semibold">
+        ✕
+      </button>
+      <span id="modalBadge" class="inline-block px-3 py-1 rounded-full bg-blue-50 text-[#0071e3] text-xs font-semibold mb-3">Yangi mahsulot</span>
+      <h3 id="modalTitle" class="text-2xl sm:text-3xl font-bold tracking-tight text-[#1d1d1f]">iPhone 16 Pro</h3>
+      <p id="modalSubtitle" class="text-base font-medium text-[#1d1d1f]/80 mt-1">Titan korpus va Apple Intelligence.</p>
+      <p id="modalDescription" class="text-sm text-[#6e6e73] leading-relaxed mt-4">Batafsil ma'lumot...</p>
+      <div class="mt-6 pt-5 border-t border-black/10 flex items-center justify-between">
+        <div>
+          <span class="text-xs text-[#86868b] block">Narxi</span>
+          <span id="modalPrice" class="text-lg font-bold text-[#1d1d1f]">$999</span>
+        </div>
+        <button id="modalActionBtn" class="btn-apple-primary btn-sm">Savatga qo‘shish</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification (Never using alert()) -->
+  <div id="appleToast" class="fixed bottom-6 right-6 z-50 translate-y-24 opacity-0 pointer-events-none transition-all duration-300 bg-[#1d1d1f]/95 text-white backdrop-blur-md px-5 py-3.5 rounded-2xl shadow-2xl flex items-center gap-3 text-sm">
+    <span class="w-2.5 h-2.5 rounded-full bg-emerald-400"></span>
+    <span id="appleToastMsg">Mahsulot savatga qo‘shildi</span>
+  </div>
+
+  <!-- =========================================================
+       9. JAVASCRIPT: MEGA-MENU, CANVAS MOTION, CAROUSEL & CART
+  ========================================================= -->
+  <script>
+    // ---------------------------------------------------------
+    // A. APPLE MEGA-MENU DATA & INTERACTION ENGINE
+    // ---------------------------------------------------------
+    const megaMenuData = {
+      store: [
+        {
+          heading: 'Shop',
+          large: true,
+          links: ['Shop the Latest', 'Mac', 'iPad', 'iPhone', 'Apple Watch', 'Apple Vision Pro', 'Accessories']
+        },
+        {
+          heading: 'Quick Links',
+          large: false,
+          links: ['Find a Store', 'Order Status', 'Apple Trade In', 'Financing', 'Personal Setup']
+        },
+        {
+          heading: 'Shop Special Stores',
+          large: false,
+          links: ['Certified Refurbished', 'Education', 'Business', 'Veterans and Military', 'Government']
+        }
+      ],
+      mac: [
+        {
+          heading: 'Explore Mac',
+          large: true,
+          links: ['Explore All Mac', 'MacBook Air', 'MacBook Pro', 'iMac', 'Mac mini', 'Mac Studio', 'Mac Pro', 'Displays']
+        },
+        {
+          heading: 'Shop Mac',
+          large: false,
+          links: ['Shop Mac', 'Mac Accessories', 'Apple Trade In', 'Financing']
+        },
+        {
+          heading: 'More from Mac',
+          large: false,
+          links: ['Mac Support', 'AppleCare+ for Mac', 'macOS Sequoia', 'Apple Intelligence', 'Continuity']
+        }
+      ],
+      ipad: [
+        {
+          heading: 'Explore iPad',
+          large: true,
+          links: ['Explore All iPad', 'iPad Pro', 'iPad Air', 'iPad', 'iPad mini', 'Apple Pencil', 'Keyboards']
+        },
+        {
+          heading: 'Shop iPad',
+          large: false,
+          links: ['Shop iPad', 'iPad Accessories', 'Apple Trade In', 'Financing']
+        },
+        {
+          heading: 'More from iPad',
+          large: false,
+          links: ['iPad Support', 'AppleCare+ for iPad', 'iPadOS 18', 'Apple Intelligence', 'iCloud+']
+        }
+      ],
+      iphone: [
+        {
+          heading: 'Explore iPhone',
+          large: true,
+          links: ['Explore All iPhone', 'iPhone 16 Pro', 'iPhone 16', 'iPhone 15', 'iPhone 14', 'iPhone SE']
+        },
+        {
+          heading: 'Shop iPhone',
+          large: false,
+          links: ['Shop iPhone', 'iPhone Accessories', 'Apple Trade In', 'Carrier Deals at Apple', 'Financing']
+        },
+        {
+          heading: 'More from iPhone',
+          large: false,
+          links: ['iPhone Support', 'AppleCare+ for iPhone', 'iOS 18', 'Apple Intelligence', 'iPhone Privacy']
+        }
+      ],
+      watch: [
+        {
+          heading: 'Explore Watch',
+          large: true,
+          links: ['Explore All Apple Watch', 'Apple Watch Series 10', 'Apple Watch Ultra 2', 'Apple Watch SE', 'Apple Watch Nike']
+        },
+        {
+          heading: 'Shop Watch',
+          large: false,
+          links: ['Shop Apple Watch', 'Apple Watch Studio', 'Apple Watch Bands', 'Apple Watch Accessories', 'Apple Trade In']
+        },
+        {
+          heading: 'More from Watch',
+          large: false,
+          links: ['Apple Watch Support', 'AppleCare+', 'watchOS 11', 'Apple Fitness+']
+        }
+      ],
+      vision: [
+        {
+          heading: 'Explore Vision',
+          large: true,
+          links: ['Explore Apple Vision Pro', 'Guided Tour', 'Tech Specs']
+        },
+        {
+          heading: 'Shop Vision',
+          large: false,
+          links: ['Shop Apple Vision Pro', 'Apple Vision Pro Accessories', 'Book a Demo']
+        },
+        {
+          heading: 'More from Vision',
+          large: false,
+          links: ['Apple Vision Pro Support', 'AppleCare+', 'visionOS 2']
+        }
+      ],
+      airpods: [
+        {
+          heading: 'Explore AirPods',
+          large: true,
+          links: ['Explore All AirPods', 'AirPods 4', 'AirPods Pro 2', 'AirPods Max']
+        },
+        {
+          heading: 'Shop AirPods',
+          large: false,
+          links: ['Shop AirPods', 'AirPods Accessories']
+        },
+        {
+          heading: 'More from AirPods',
+          large: false,
+          links: ['AirPods Support', 'AppleCare+ for Headphones', 'Hearing Health', 'Apple Music']
+        }
+      ],
+      tvhome: [
+        {
+          heading: 'Explore TV & Home',
+          large: true,
+          links: ['Explore TV & Home', 'Apple TV 4K', 'HomePod', 'HomePod mini']
+        },
+        {
+          heading: 'Shop TV & Home',
+          large: false,
+          links: ['Shop Apple TV 4K', 'Shop HomePod', 'Shop Siri Remote', 'TV & Home Accessories']
+        },
+        {
+          heading: 'More from TV & Home',
+          large: false,
+          links: ['Apple TV Support', 'HomePod Support', 'Apple TV app', 'Apple TV+', 'Home app']
+        }
+      ],
+      entertainment: [
+        {
+          heading: 'Explore Entertainment',
+          large: true,
+          links: ['Explore Entertainment', 'Apple One', 'Apple TV+', 'Apple Music', 'Apple Arcade', 'Apple Fitness+', 'Apple News+', 'Apple Podcasts', 'App Store']
+        },
+        {
+          heading: 'Support',
+          large: false,
+          links: ['Apple TV+ Support', 'Apple Music Support']
+        }
+      ],
+      accessories: [
+        {
+          heading: 'Shop Accessories',
+          large: true,
+          links: ['Shop All Accessories', 'Mac', 'iPad', 'iPhone', 'Apple Watch', 'Apple Vision Pro', 'AirPods', 'TV & Home']
+        },
+        {
+          heading: 'Explore Accessories',
+          large: false,
+          links: ['Made by Apple', 'Beats by Dr. Dre', 'AirTag']
+        }
+      ],
+      support: [
+        {
+          heading: 'Explore Support',
+          large: true,
+          links: ['iPhone', 'Mac', 'iPad', 'Watch', 'Apple Vision Pro', 'AirPods', 'Music', 'TV']
+        },
+        {
+          heading: 'Get Help',
+          large: false,
+          links: ['Community', 'Check Coverage', 'Repair', 'Contact Us']
+        },
+        {
+          heading: 'Helpful Topics',
+          large: false,
+          links: ['Get AppleCare+', 'Apple Account and Password', 'Billing & Subscriptions', 'Accessibility']
+        }
+      ]
+    };
+
+    const globalHeader = document.getElementById('globalHeader');
+    const megaMenuPanel = document.getElementById('megaMenuPanel');
+    const megaMenuContent = document.getElementById('megaMenuContent');
+    const searchPanel = document.getElementById('searchPanel');
+    const bagPanel = document.getElementById('bagPanel');
+    const pageCurtain = document.getElementById('pageCurtain');
+    const navTriggers = document.querySelectorAll('.nav-trigger');
+
+    let activeMenuKey = null;
+    let closeTimeout = null;
+
+    function closeAllFlyouts() {
+      megaMenuPanel.classList.remove('active');
+      searchPanel.classList.remove('active');
+      bagPanel.classList.remove('active');
+      pageCurtain.classList.remove('active');
+      globalHeader.classList.remove('menu-open');
+      activeMenuKey = null;
+    }
+
+    function openMegaMenu(key) {
+      clearTimeout(closeTimeout);
+      searchPanel.classList.remove('active');
+      bagPanel.classList.remove('active');
+
+      const columns = megaMenuData[key];
+      if (!columns) return;
+
+      if (activeMenuKey !== key) {
+        megaMenuContent.innerHTML = `
+          <div class="grid grid-cols-1 md:grid-cols-12 gap-8">
+            ${columns
+              .map((col, colIndex) => {
+                const spanClass = col.large ? 'md:col-span-5' : 'md:col-span-3';
+                const textClass = col.large
+                  ? 'text-[22px] sm:text-[24px] font-semibold tracking-tight text-[#1d1d1f] hover:text-[#0071e3]'
+                  : 'text-[13px] font-medium text-[#1d1d1f]/85 hover:text-[#0071e3]';
+                return `
+                  <div class="${spanClass}">
+                    <p class="text-[12px] text-[#86868b] mb-3">${col.heading}</p>
+                    <ul class="space-y-2">
+                      ${col.links
+                        .map(
+                          (link, idx) => `
+                        <li class="mega-item" style="transition-delay: ${(colIndex * 40) + (idx * 25)}ms">
+                          <a href="#bento-grid" onclick="closeAllFlyouts()" class="${textClass} block transition-colors">${link}</a>
+                        </li>
+                      `
+                        )
+                        .join('')}
+                    </ul>
+                  </div>
+                `;
+              })
+              .join('')}
+          </div>
+        `;
+      }
+
+      activeMenuKey = key;
+      globalHeader.classList.add('menu-open');
+      pageCurtain.classList.add('active');
+      // Force reflow so staggered animations always trigger smoothly
+      void megaMenuPanel.offsetWidth;
+      megaMenuPanel.classList.add('active');
+    }
+
+    navTriggers.forEach((btn) => {
+      btn.addEventListener('mouseenter', () => {
+        openMegaMenu(btn.dataset.menu);
+      });
+      btn.addEventListener('click', () => {
+        if (activeMenuKey === btn.dataset.menu) {
+          closeAllFlyouts();
+        } else {
+          openMegaMenu(btn.dataset.menu);
+        }
+      });
+    });
+
+    globalHeader.addEventListener('mouseleave', () => {
+      closeTimeout = setTimeout(() => {
+        if (!searchPanel.classList.contains('active') && !bagPanel.classList.contains('active')) {
+          closeAllFlyouts();
+        }
+      }, 180);
+    });
+
+    globalHeader.addEventListener('mouseenter', () => {
+      clearTimeout(closeTimeout);
+    });
+
+    pageCurtain.addEventListener('click', closeAllFlyouts);
+
+    // Search & Bag Panel Controls
+    document.getElementById('searchTrigger').addEventListener('click', () => {
+      const isOpen = searchPanel.classList.contains('active');
+      closeAllFlyouts();
+      if (!isOpen) {
+        globalHeader.classList.add('menu-open');
+        pageCurtain.classList.add('active');
+        searchPanel.classList.add('active');
+        setTimeout(() => document.getElementById('appleSearchInput').focus(), 120);
+      }
+    });
+
+    document.getElementById('clearSearchBtn').addEventListener('click', closeAllFlyouts);
+
+    document.getElementById('bagTrigger').addEventListener('click', () => {
+      const isOpen = bagPanel.classList.contains('active');
+      closeAllFlyouts();
+      if (!isOpen) {
+        globalHeader.classList.add('menu-open');
+        pageCurtain.classList.add('active');
+        bagPanel.classList.add('active');
+      }
+    });
+
+    document.getElementById('closeBagBtn').addEventListener('click', closeAllFlyouts);
+
+    // Live Search Filter
+    const searchInput = document.getElementById('appleSearchInput');
+    const searchResultsList = document.getElementById('searchResultsList');
+    const searchableItems = [
+      { title: 'iPhone 16 Pro — Titanium & Apple Intelligence', href: '#iphone16pro' },
+      { title: 'iPhone 16 — Ultramarine & Camera Control', href: '#iphone16pro' },
+      { title: 'Apple Watch Series 10 — Jet Black & Eng yupqa korpus', href: '#watch10' },
+      { title: 'iPad Pro M4 — Ultra Retina XDR Tandem OLED', href: '#bento-grid' },
+      { title: 'MacBook Air M3 — 13” va 15” yengil noutbuk', href: '#bento-grid' },
+      { title: 'MacBook Pro M4 Max — Professional quvvat', href: '#bento-grid' },
+      { title: 'Apple Vision Pro — Spatial Computing', href: '#bento-grid' },
+      { title: 'AirPods Pro 2 — Adaptive Audio & USB-C', href: '#bento-grid' },
+      { title: 'Apple TV+ — Severance, Silo, Ted Lasso premyeralari', href: '#apple-tv' }
+    ];
+
+    searchInput.addEventListener('input', (e) => {
+      const q = e.target.value.toLowerCase().trim();
+      const filtered = searchableItems.filter((item) => item.title.toLowerCase().includes(q));
+      searchResultsList.innerHTML = filtered.length
+        ? filtered
+            .map(
+              (item) => `
+            <li>
+              <a href="${item.href}" onclick="closeAllFlyouts()" class="flex items-center gap-2 hover:text-[#0071e3] transition-colors">
+                <span>→</span> ${item.title}
+              </a>
+            </li>
+          `
+            )
+            .join('')
+        : `<li class="text-[#86868b]">"${e.target.value}" bo‘yicha natija topilmadi.</li>`;
+    });
+
+    // Mobile Drawer Accordion Population
+    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+    const mobileDrawer = document.getElementById('mobileDrawer');
+    const hamburgerIcon = document.getElementById('hamburgerIcon');
+    const closeMobileIcon = document.getElementById('closeMobileIcon');
+    const mobileAccordionList = document.getElementById('mobileAccordionList');
+
+    const menuLabels = {
+      store: 'Store',
+      mac: 'Mac',
+      ipad: 'iPad',
+      iphone: 'iPhone',
+      watch: 'Watch',
+      vision: 'Vision',
+      airpods: 'AirPods',
+      tvhome: 'TV & Home',
+      entertainment: 'Entertainment',
+      accessories: 'Accessories',
+      support: 'Support'
+    };
+
+    mobileAccordionList.innerHTML = Object.keys(menuLabels)
+      .map((key) => {
+        const subLinks = megaMenuData[key][0].links;
+        return `
+          <div class="py-3.5">
+            <button onclick="toggleMobileSubmenu('mob-${key}')" class="w-full flex items-center justify-between text-2xl font-semibold text-[#1d1d1f]">
+              <span>${menuLabels[key]}</span>
+              <span class="text-lg text-[#86868b]">+</span>
+            </button>
+            <ul id="mob-${key}" class="hidden mt-3 pl-2 space-y-2 text-base text-[#1d1d1f]/80">
+              ${subLinks
+                .map(
+                  (l) => `<li><a href="#bento-grid" onclick="toggleMobileDrawer(false)" class="block py-1 hover:text-[#0071e3]">${l}</a></li>`
+                )
+                .join('')}
+            </ul>
+          </div>
+        `;
+      })
+      .join('');
+
+    function toggleMobileSubmenu(id) {
+      const el = document.getElementById(id);
+      el.classList.toggle('hidden');
+    }
+
+    function toggleMobileDrawer(forceState) {
+      const isHidden = mobileDrawer.classList.contains('hidden');
+      const shouldOpen = typeof forceState === 'boolean' ? forceState : isHidden;
+      if (shouldOpen) {
+        mobileDrawer.classList.remove('hidden');
+        hamburgerIcon.classList.add('hidden');
+        closeMobileIcon.classList.remove('hidden');
+        document.body.style.overflow = 'hidden';
+      } else {
+        mobileDrawer.classList.add('hidden');
+        hamburgerIcon.classList.remove('hidden');
+        closeMobileIcon.classList.add('hidden');
+        document.body.style.overflow = '';
+      }
+    }
+
+    mobileMenuBtn.addEventListener('click', () => toggleMobileDrawer());
+
+    // ---------------------------------------------------------
+    // B. INTERACTIVE TITANIUM COLOR SWITCHER & HERO CANVAS GLOW
+    // ---------------------------------------------------------
+    let canvasGlowColor = { r: 191, g: 164, b: 143 };
+
+    function setTitaniumFinish(name, hexBorder, shadowRgba) {
+      const frame = document.getElementById('iphoneProFrame');
+      const label = document.getElementById('finishLabel');
+      frame.style.borderColor = hexBorder;
+      frame.style.boxShadow = `0 -20px 75px ${shadowRgba}`;
+      label.textContent = name;
+      label.style.color = hexBorder;
+
+      // Update ambient canvas wave color
+      const bigint = parseInt(hexBorder.slice(1), 16);
+      canvasGlowColor = {
+        r: (bigint >> 16) & 255,
+        g: (bigint >> 8) & 255,
+        b: bigint & 255
+      };
+    }
+
+    // Procedural Apple Intelligence Ambient Canvas (Hero 1 Video-Style Motion)
+    function initHeroCanvas() {
+      const canvas = document.getElementById('heroProCanvas');
+      const ctx = canvas.getContext('2d');
+      let width, height;
+      let t = 0;
+
+      function resize() {
+        width = canvas.width = canvas.offsetWidth;
+        height = canvas.height = canvas.offsetHeight;
+      }
+      window.addEventListener('resize', resize);
+      resize();
+
+      function animate() {
+        t += 0.015;
+        ctx.clearRect(0, 0, width, height);
+
+        // Soft glowing Apple Intelligence aura waves
+        const centerX = width / 2;
+        const centerY = height * 0.68;
+
+        for (let i = 0; i < 3; i++) {
+          const radius = 160 + i * 75 + Math.sin(t + i) * 20;
+          const grad = ctx.createRadialGradient(
+            centerX + Math.cos(t * 0.8 + i) * 40,
+            centerY + Math.sin(t * 0.6 + i) * 20,
+            10,
+            centerX,
+            centerY,
+            radius
+          );
+          if (i === 0) {
+            grad.addColorStop(0, `rgba(${canvasGlowColor.r}, ${canvasGlowColor.g}, ${canvasGlowColor.b}, 0.28)`);
+          } else if (i === 1) {
+            grad.addColorStop(0, 'rgba(99, 102, 241, 0.14)');
+          } else {
+            grad.addColorStop(0, 'rgba(236, 72, 153, 0.10)');
+          }
+          grad.addColorStop(1, 'rgba(0, 0, 0, 0)');
+
+          ctx.fillStyle = grad;
+          ctx.beginPath();
+          ctx.arc(centerX, centerY, radius, 0, Math.PI * 2);
+          ctx.fill();
+        }
+
+        requestAnimationFrame(animate);
+      }
+      animate();
+    }
+
+    // ---------------------------------------------------------
+    // C. LIVE APPLE WATCH SERIES 10 REAL-TIME CLOCK
+    // ---------------------------------------------------------
+    function updateLiveWatch() {
+      const now = new Date();
+      const hours = String(now.getHours()).padStart(2, '0');
+      const minutes = String(now.getMinutes()).padStart(2, '0');
+      const timeEl = document.getElementById('liveWatchTime');
+      if (timeEl) timeEl.textContent = `${hours}:${minutes}`;
+    }
+    setInterval(updateLiveWatch, 1000);
+    updateLiveWatch();
+
+    // ---------------------------------------------------------
+    // D. APPLE TV+ CINEMATIC CAROUSEL (AUTO-SCROLL + CONTROLS)
+    // ---------------------------------------------------------
+    const tvShows = [
+      {
+        title: 'SEVERANCE',
+        genre: 'Triller • Yangi mavsum endi efirda',
+        tagline: 'Ish va shaxsiy xotiralar o‘rtasidagi chegara buzilganda.',
+        gradient: 'from-[#06283D] via-[#1363DF] to-[#020617]',
+        accent: 'text-cyan-300'
+      },
+      {
+        title: 'SILO',
+        genre: 'Ilmiy-fantastika • Haqiqat yer ostida yashiringan',
+        tagline: 'O‘n minglab odamlar ulkan yerosti bunkerida nega yashayotganini hech kim bilmaydi.',
+        gradient: 'from-[#1c1917] via-[#78350f] to-[#09090b]',
+        accent: 'text-amber-300'
+      },
+      {
+        title: 'TED LASSO',
+        genre: 'Komediya • Emmy mukofoti g‘olibi',
+        tagline: 'Mehribonlik va ishonch hamma narsani o‘zgartira oladi.',
+        gradient: 'from-[#14532d] via-[#1d4ed8] to-[#0f172a]',
+        accent: 'text-yellow-300'
+      },
+      {
+        title: 'FOUNDATION',
+        genre: 'Epik Fantastika • Galaktika taqdiri',
+        tagline: 'Imperiya qulashini bashorat qilgan olimlarning buyuk sayohati.',
+        gradient: 'from-[#311042] via-[#7e22ce] to-[#09090b]',
+        accent: 'text-fuchsia-300'
+      },
+      {
+        title: 'F1 THE MOVIE',
+        genre: 'Sport Drama • Apple Original Films',
+        tagline: 'Tezlik, xavf va chempionlik shohsupasiga qaytish.',
+        gradient: 'from-[#450a0a] via-[#dc2626] to-[#09090b]',
+        accent: 'text-red-300'
+      }
+    ];
+
+    const tvTrack = document.getElementById('tvCarouselTrack');
+    const tvDots = document.getElementById('tvPaginationDots');
+    const tvAutoToggle = document.getElementById('tvAutoPlayToggle');
+    let currentSlide = 0;
+    let isAutoPlaying = true;
+    let tvInterval = null;
+
+    function renderTvCarousel() {
+      tvTrack.innerHTML = tvShows
+        .map(
+          (show, idx) => `
+          <div onclick="goToTvSlide(${idx})" class="tv-slide ${idx === currentSlide ? 'active' : 'inactive'} cursor-pointer shrink-0 w-[86vw] sm:w-[70vw] max-w-[980px] h-[360px] sm:h-[490px] rounded-2xl bg-gradient-to-br ${show.gradient} relative overflow-hidden shadow-2xl flex flex-col justify-between p-6 sm:p-12 text-white select-none">
+            <!-- Cinematic Subtle Light Beams -->
+            <div class="absolute -top-24 -right-24 w-96 h-96 rounded-full bg-white/10 blur-3xl pointer-events-none"></div>
+            <div class="relative z-10 flex items-center justify-between">
+              <span class="text-xs sm:text-sm font-semibold tracking-[0.2em] uppercase text-white/80"> tv+</span>
+              <span class="px-3 py-1 rounded-full bg-black/35 backdrop-blur-md text-xs font-medium border border-white/15">4K Dolby Vision</span>
+            </div>
+
+            <div class="relative z-10 my-auto max-w-xl">
+              <p class="text-xs sm:text-sm font-semibold uppercase tracking-widest ${show.accent} mb-2">${show.genre}</p>
+              <h3 class="text-4xl sm:text-6xl font-black tracking-tight uppercase">${show.title}</h3>
+              <p class="mt-3 text-sm sm:text-lg text-white/85">${show.tagline}</p>
+            </div>
+
+            <div class="relative z-10 flex flex-wrap items-center gap-4">
+              <button onclick="event.stopPropagation(); openProductModal('${show.title} — Apple TV+', '${show.genre}', '${show.tagline}', 'Apple TV+ obunasi ($9.99/oy)', 'tvplus')" class="bg-white text-[#1d1d1f] hover:bg-white/90 font-semibold text-sm px-6 py-3 rounded-full inline-flex items-center gap-2 shadow-lg transition-transform hover:scale-105">
+                <span>Stream now</span>
+                <span class="w-5 h-5 rounded-full bg-[#1d1d1f] text-white text-[10px] flex items-center justify-center">▶</span>
+              </button>
+              <span class="text-xs sm:text-sm text-white/80 font-medium">Barcha qismlarni tomosha qiling</span>
+            </div>
+          </div>
+        `
+        )
+        .join('');
+
+      tvDots.innerHTML = tvShows
+        .map(
+          (_, idx) => `
+          <button onclick="goToTvSlide(${idx})" aria-label="Slayd ${idx + 1}" class="h-2 rounded-full transition-all duration-300 ${
+            idx === currentSlide ? 'w-6 bg-[#1d1d1f]' : 'w-2 bg-black/25 hover:bg-black/45'
+          }"></button>
+        `
+        )
+        .join('');
+
+      // Center active card smoothly
+      const slideEl = tvTrack.children[currentSlide];
+      if (slideEl) {
+        const containerWidth = tvTrack.parentElement.offsetWidth;
+        const offset = slideEl.offsetLeft - (containerWidth - slideEl.offsetWidth) / 2;
+        tvTrack.style.transform = `translateX(${-offset}px)`;
+      }
+    }
+
+    function goToTvSlide(index) {
+      currentSlide = (index + tvShows.length) % tvShows.length;
+      renderTvCarousel();
+    }
+
+    document.getElementById('tvPrevBtn').addEventListener('click', () => goToTvSlide(currentSlide - 1));
+    document.getElementById('tvNextBtn').addEventListener('click', () => goToTvSlide(currentSlide + 1));
+
+    function startTvAutoPlay() {
+      clearInterval(tvInterval);
+      tvInterval = setInterval(() => {
+        if (isAutoPlaying) goToTvSlide(currentSlide + 1);
+      }, 4500);
+    }
+
+    tvAutoToggle.addEventListener('click', () => {
+      isAutoPlaying = !isAutoPlaying;
+      tvAutoToggle.textContent = isAutoPlaying ? '❚❚' : '▶';
+    });
+
+    window.addEventListener('resize', renderTvCarousel);
+
+    // ---------------------------------------------------------
+    // E. SHOPPING BAG (CART) & MODAL SYSTEM
+    // ---------------------------------------------------------
+    let shoppingBag = [];
+
+    function showToast(message) {
+      const toast = document.getElementById('appleToast');
+      const msgEl = document.getElementById('appleToastMsg');
+      msgEl.textContent = message;
+      toast.classList.remove('translate-y-24', 'opacity-0');
+      setTimeout(() => {
+        toast.classList.add('translate-y-24', 'opacity-0');
+      }, 2800);
+    }
+
+    function updateBagUI() {
+      const badge = document.getElementById('bagBadge');
+      const container = document.getElementById('bagItemsContainer');
+      const footer = document.getElementById('bagFooter');
+      const totalPriceEl = document.getElementById('bagTotalPrice');
+
+      if (shoppingBag.length === 0) {
+        badge.classList.add('hidden');
+        container.innerHTML = `<p class="text-[#86868b] text-base">Savatingiz hozircha bo‘sh. Mahsulot qo‘shish uchun "Buy" tugmasini bosing.</p>`;
+        footer.classList.add('hidden');
+        return;
+      }
+
+      badge.textContent = shoppingBag.length;
+      badge.classList.remove('hidden');
+      footer.classList.remove('hidden');
+
+      let total = 0;
+      container.innerHTML = shoppingBag
+        .map((item, idx) => {
+          total += item.price;
+          return `
+            <div class="flex items-center justify-between bg-white p-3.5 rounded-2xl border border-black/5">
+              <div>
+                <p class="font-semibold text-sm text-[#1d1d1f]">${item.name}</p>
+                <p class="text-xs text-[#86868b]">Bepul yetkazib berish</p>
+              </div>
+              <div class="flex items-center gap-4">
+                <span class="font-semibold text-sm text-[#1d1d1f]">$${item.price.toLocaleString()}</span>
+                <button onclick="removeFromBag(${idx})" class="text-xs text-red-500 hover:underline">O‘chirish</button>
+              </div>
+            </div>
+          `;
+        })
+        .join('');
+
+      totalPriceEl.textContent = `$${total.toLocaleString()}`;
+    }
+
+    function addToBag(name, price) {
+      shoppingBag.push({ name, price });
+      updateBagUI();
+      showToast(`"${name}" savatga qo‘shildi`);
+    }
+
+    function removeFromBag(index) {
+      shoppingBag.splice(index, 1);
+      updateBagUI();
+    }
+
+    function checkoutDemo() {
+      shoppingBag = [];
+      updateBagUI();
+      closeAllFlyouts();
+      showToast('Buyurtmangiz muvaffaqiyatli qabul qilindi! Rahmat.');
+    }
+
+    // Product Quick-View Modal
+    const productModal = document.getElementById('productModal');
+    function openProductModal(title, subtitle, description, priceText, type) {
+      document.getElementById('modalTitle').textContent = title;
+      document.getElementById('modalSubtitle').textContent = subtitle;
+      document.getElementById('modalDescription').textContent = description;
+      document.getElementById('modalPrice').textContent = priceText;
+      document.getElementById('modalBadge').textContent = type === 'tvplus' ? 'Apple TV+ Original' : 'Apple Rasmiy Vitrina';
+
+      const actionBtn = document.getElementById('modalActionBtn');
+      if (type === 'tvplus') {
+        actionBtn.textContent = '7 kun bepul sinab ko‘rish';
+        actionBtn.onclick = () => {
+          closeProductModal();
+          showToast(`${title} — 7 kunlik bepul obuna faollashtirildi!`);
+        };
+      } else {
+        actionBtn.textContent = 'Savatga qo‘shish';
+        actionBtn.onclick = () => {
+          const numericPrice = parseInt(priceText.replace(/[^0-9]/g, ''), 10) || 999;
+          addToBag(title, numericPrice);
+          closeProductModal();
+        };
+      }
+
+      productModal.classList.remove('hidden');
+      productModal.classList.add('flex');
+    }
+
+    function closeProductModal() {
+      productModal.classList.add('hidden');
+      productModal.classList.remove('flex');
+    }
+
+    productModal.addEventListener('click', (e) => {
+      if (e.target === productModal) closeProductModal();
+    });
+
+    // ---------------------------------------------------------
+    // F. INTERSECTION OBSERVER SCROLL REVEAL & ONLOAD INIT
+    // ---------------------------------------------------------
+    window.addEventListener('load', () => {
+      initHeroCanvas();
+      renderTvCarousel();
+      startTvAutoPlay();
+
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('visible');
+            }
+          });
+        },
+        { threshold: 0.12 }
+      );
+
+      document.querySelectorAll('.reveal-up').forEach((el) => observer.observe(el));
+    });
+  </script>
+</body>
+</html>
